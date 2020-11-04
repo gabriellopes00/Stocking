@@ -1,9 +1,35 @@
-import express, {Request, Response} from 'express';
+//imports
+  import express, {Request, Response} from 'express';
+  import db from '../database/connection';
+  
+  import validation from '../validations/inputDataValidation'
 
-const app = express();
-const router = express.Router();
+  const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send('Vaiii caraioooo')
+  interface product{
+    name: string,
+    quantity: number,
+    date: string,
+    category: string,
+    marketplace: string,
+    description: string
+  }
+
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const products = await db.select().from('products');
+    res.status(200).json(products)
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+router.post('/', async (req: Request, res: Response) => {
+  try {
+    const data:product = req.body;
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 })
 export default router;

@@ -1,15 +1,13 @@
-import express from 'express';
-const app = express();
+//Imports
+  import express from 'express';
+  const app = express();
 
-import db from './database/connection';
+  import bodyParser from 'body-parser';
 
-async function selected(){
-  const query = await db.select().from('products');
-  console.log(query);
-}
-selected();
+  import products from './routes/Products';
 
-import products from './routes/Products'
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.use('/', products);
 
