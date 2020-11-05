@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "knex": "^0.21.12",
     "mysql2": "^2.2.5",
+    "slugify": "^1.4.6",
     "yup": "^0.29.3"
   },
   "devDependencies": {

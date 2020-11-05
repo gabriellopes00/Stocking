@@ -1,0 +1,15 @@
+CREATE TABLE supplies(
+  id INT NOT NULL AUTO_INCREMENT,
+  supplyDate DATE NOT NULL DEFAULT GETDATE(),
+  quantity DOUBLE NOT NULL,
+  price DOUBLE NOT NULL,
+  paymentMethod VARCHAR(255) NOT NULL,
+  supplyDescription TEXT,
+
+  productId INT NOT NULL, 
+  providerId INT NOT NULL,
+
+  PRIMARY KEY(id),
+  FOREIGN KEY (productId) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (providerId) REFERENCES providers(id) ON DELETE CASCADE ON UPDATE CASCADE
+)

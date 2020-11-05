@@ -1,0 +1,14 @@
+CREATE TABLE sales(
+  id INT NOT NULL AUTO_INCREMENT,
+  quantity DOUBLE NOT NULL,
+  price DOUBLE NOT NULL,
+  paymentMethod VARCHAR(255) NOT NULL,
+  saleDescription TEXT,
+
+  productId INT NOT NULL, 
+  clientId INT NOT NULL
+
+  PRIMARY KEY(id),
+  FOREIGN KEY (productId) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (clientId) REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
