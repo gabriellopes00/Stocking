@@ -4,7 +4,7 @@
 
   import bodyParser from 'body-parser';
 
-  import products from './routes/Products';
+  import products from './controllers/Products';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

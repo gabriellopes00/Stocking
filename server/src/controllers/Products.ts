@@ -1,21 +1,21 @@
-//imports
-  import express, {Request, Response} from 'express';
+//Imports
+  import Router from 'express';
   import db from '../database/connection';
   
   import validation from '../validations/inputDataValidation'
 
-  const router = express.Router();
+  const router = Router();
 
   interface product{
-    name: string,
+    productName: string,
     quantity: number,
-    date: string,
+    price: number,
+    purchaseDate: string,
     category: string,
-    marketplace: string,
     description: string
   }
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (req, res) => {
   try {
     const products = await db.select().from('products');
     res.status(200).json(products)
@@ -24,11 +24,14 @@ router.get('/', async (req: Request, res: Response) => {
   }
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req, res) => {
   try {
     const data:product = req.body;
-    console.log(data);
+    await validation.productValidation.validate(data);
+    db.insert(data).into('products');
+    res.sendStatus(201);
   } catch (error) {
+    error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
     console.log(error);
   }
 })
