@@ -27,17 +27,20 @@ export default {
   async createCategory(req: Request, res:Response){
     try {
       const {categoryName} = req.body;
-      const data:object = {
-        categoryName: categoryName,
-        categoryUrl: Slugify(categoryName)
-      }
+      if (categoryName) {
+        const data:object = {
+          categoryName: categoryName,
+          categoryUrl: Slugify(categoryName)
+        }
 
-      await Validator.categoriesValidation.validate(data);
-      await db.insert(data).into('categories');
+        await Validator.categoriesValidation.validate(data);
+        await db.insert(data).into('categories');
+        
+        res.sendStatus(201);
+      } else return res.sendStatus(400)
       
-      res.sendStatus(201);
     } catch (error) {
-      error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
+      res.sendStatus(400);
       console.log(error);
     }
   },
@@ -45,11 +48,16 @@ export default {
   async updateCategory(req: Request, res:Response){
     try {
       const { categoryUrl } = req.params;
-      const data:category = req.body;
+      const category:category = req.body;    
 
-      const category = await db.select()
+      const categoryReturned = await db.select()
       .from('categories').where({categoryUrl: categoryUrl});
-      if(category.length === 0) return res.sendStatus(404);
+      if(categoryReturned.length === 0) return res.sendStatus(404);
+
+      const data:object = {
+        categoryName: category.categoryName.trim(),
+        categoryUrl: Slugify(category.categoryName)
+      }
 
       await Validator.categoriesValidation.validate(data);      
       await db.update(data).table('categories')
@@ -57,7 +65,7 @@ export default {
 
       res.sendStatus(200);
     } catch (error) {
-      error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
+      res.sendStatus(400);
       console.log(error);
     }
   },

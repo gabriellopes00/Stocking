@@ -24,7 +24,7 @@ class Validation{
       productName: Yup.string().required().trim(),
       quantity: Yup.number().min(0).required(),
       price: Yup.number().positive().required(),
-      categoryName: Yup.string().lowercase().required(),
+      categoryName: Yup.string().required(),
       productDescription: Yup.string().max(500).optional(),
     })
     this.clientsValidation = Yup.object().shape({
@@ -42,7 +42,7 @@ class Validation{
       websiteLink: Yup.string().url().optional(),
     })
     this.categoriesValidation = Yup.object().shape({
-      categoryName: Yup.string().required().lowercase().trim()
+      categoryName: Yup.string().required().trim()
     })
     this.suppliesValidation = Yup.object().shape({
       supplyDate: Yup.string().required().trim(),

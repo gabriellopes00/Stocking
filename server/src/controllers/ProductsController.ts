@@ -44,11 +44,11 @@ export default {
   async getProductByCategory(req: Request, res:Response){
     try {
       const {categoryUrl} = req.params;
+      const categoryName:string = Formatter(categoryUrl).trim();
 
-      const categoryName = Formatter(categoryUrl);
       const products:Array<product> = await db.select()
       .from('products').where({categoryName: categoryName});
-      if(products.length === 0) return res.sendStatus(404);
+      if(products.length === 0) return res.sendStatus(204);
 
       res.status(200).json(products);
     } catch (error) {
@@ -60,12 +60,13 @@ export default {
   async createProduct(req: Request, res:Response){
     try {
       const data:product = req.body;
+
       await Validator.productValidation.validate(data);
       await db.insert(data).into('products');
+
       res.sendStatus(201);
     } catch (error) {
-      error.name === 'ValidationError' ? 
-      res.sendStatus(400) : res.sendStatus(500);
+      res.sendStatus(400);
       console.log(error);
     }
   },

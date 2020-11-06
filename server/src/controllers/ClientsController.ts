@@ -34,6 +34,8 @@ export default {
       .from('clients').where({id: id});    
       if(client.length === 0) return res.sendStatus(404);
 
+      console.log(client[0].cep);
+
       const address = await getAddress(client[0].cep);
       const finalClientData:object = {
         data: client,
@@ -56,8 +58,7 @@ export default {
 
       res.sendStatus(201);
     } catch (error) {
-      error.name === 'ValidationError' ? 
-      res.sendStatus(400) : res.sendStatus(500);
+      res.sendStatus(400);
       console.log(error);
     }
   },
@@ -67,7 +68,7 @@ export default {
       const { id } = req.params;
       const data:client = req.body;
 
-      const client = await db.select().from('client').where({id : id});
+      const client = await db.select().from('clients').where({id : id});
       if(client.length === 0) return res.sendStatus(404);
 
       await Validator.clientsValidation.validate(data);
@@ -75,7 +76,7 @@ export default {
 
       res.sendStatus(200);
     } catch (error) {
-      error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
+      res.sendStatus(400);
       console.log(error);
     }
   },
@@ -84,7 +85,7 @@ export default {
     try {
       const { id } = req.params;
 
-      const client = await db.select().from('client').where({id : id});
+      const client = await db.select().from('clients').where({id : id});
       if(client.length === 0) return res.sendStatus(404);
 
       await db.delete().from('clients').where({id : id});
