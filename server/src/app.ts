@@ -7,6 +7,7 @@
   import ProductsRoutes from './routes/ProductsRoutes';
   import CategoriesRoutes from './routes/CategoriesRoutes';
   import ClientsRoutes from './routes/ClientsRoutes';
+  import ProvidersRoutes from './routes/ProvidersRoutes';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use('/products', ProductsRoutes);
 app.use('/categories', CategoriesRoutes);
 app.use('/clients', ClientsRoutes);
+app.use('/providers', ProvidersRoutes);
 
 const port: Number = 3000;
 app.listen(port, (err: any = null) => {

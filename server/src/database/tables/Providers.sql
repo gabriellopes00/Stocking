@@ -1,11 +1,11 @@
 CREATE TABLE providers(
   id INT NOT NULL AUTO_INCREMENT,
   providerName VARCHAR(255) NOT NULL,
-  email VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
   phone INT NOT NULL,
   cep INT NOT NULL,
-  cnpj VARCHAR(100) NOT NULL,
-  websitelink VARCHAR(100),
+  cnpj VARCHAR(100) NOT NULL UNIQUE,
+  websitelink VARCHAR(100) UNIQUE,
 
   PRIMARY KEY(id)
 )

@@ -3,7 +3,7 @@ import Slugify from 'slugify';
 
 class Validation{  
   clientsValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { clientName: string; email: string; phone: number; cep: number; }>, object>;
-  providersValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { providerName: string; email: string; phone: number; cep: number; cnpj: string; websiteLink: string | undefined; }>, object>;
+  providersValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { providerName: string; email: string; phone: number; cep: string; cnpj: string; websiteLink: string | undefined; }>, object>;
   categoriesValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { categoryName: string; }>, object>;
   suppliesValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { supplyDate: string; quantity: number; price: number; paymentMethod: string; description: string | undefined; providerId: number; productId: number; }>, object>;
   salesValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { saleDate: string; quantity: number; price: number; paymentMethod: string; description: string | undefined; clientId: number; productId: number; }>, object>;
@@ -37,7 +37,7 @@ class Validation{
       providerName: Yup.string().required().trim(),
       email: Yup.string().email().required().trim(),
       phone: Yup.number().positive().required(),
-      cep: Yup.number().required(),
+      cep: Yup.string().required(),
       cnpj: Yup.string().required(),
       websiteLink: Yup.string().url().optional(),
     })

@@ -7,7 +7,7 @@
   
   interface client{
     clientName: string,
-    email: number,
+    email: string,
     phone: number,
     cep: string
   };
@@ -33,8 +33,6 @@ export default {
       const client:Array<client> = await db.select()
       .from('clients').where({id: id});    
       if(client.length === 0) return res.sendStatus(404);
-
-      console.log(client[0].cep);
 
       const address = await getAddress(client[0].cep);
       const finalClientData:object = {
