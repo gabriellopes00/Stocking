@@ -13,7 +13,7 @@ interface supply{
   supplyDescription:string,
 
   productId: number,
-  clientId: number
+  providerId: number
 };
 
 export default {
@@ -37,11 +37,19 @@ async show(req: Request, res:Response){
     const supply:Array<supply> = await db.select()
     .from('supplies').where({id: id});    
     if(supply.length === 0) return res.sendStatus(404);
-    else res.status(200).json(supply);
+
+    const providerName = await db.select('providerName').from('providers')
+    .where({id: supply[0].providerId});
+    const productName = await db.select('productName').from('products')
+    .where({id: supply[0].productId});
+
+    supply[0].providerId = providerName[0].providerName;
+    supply[0].productId = productName[0].productName;
+
+    res.status(200).json(supply);
 
   } catch (error) {
-    console.log(error);
-    error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
+    res.status(400).json(error);
   }
 },
 
@@ -55,8 +63,7 @@ async createSupply(req: Request, res:Response){
 
     res.sendStatus(201);
   } catch (error) {
-    res.sendStatus(400);
-    console.log(error);
+    res.status(400).json(error);
   }
 },
 /*
@@ -89,8 +96,7 @@ async deleteSupply(req: Request, res:Response){
     res.sendStatus(200);
 
   } catch (error) {
-    res.status(500).json(error)
-    console.log(error);
+    res.status(500).json(error);
   }
 }
 

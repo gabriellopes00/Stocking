@@ -52,8 +52,7 @@ export default {
 
       res.status(200).json(products);
     } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
+      res.status(500).json(error);
     }
   },
 
@@ -66,8 +65,7 @@ export default {
 
       res.sendStatus(201);
     } catch (error) {
-      res.sendStatus(400);
-      console.log(error);
+      res.status(400).json(error);
     }
   },
 
@@ -84,8 +82,7 @@ export default {
 
       res.sendStatus(200);
     } catch (error) {
-      error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
-      console.log(error);
+      res.status(400).json(error);
     }
   },
 
@@ -100,8 +97,7 @@ export default {
       res.sendStatus(200);
 
     } catch (error) {
-      error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
-      console.log(error);
+      res.status(400).json(error);
     }
   }
   

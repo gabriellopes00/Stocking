@@ -59,7 +59,6 @@ async createProvider(req: Request, res:Response){
     res.sendStatus(201);
   } catch (error) {
     res.status(400).json(error);
-    console.log(error);
   }
 },
 
@@ -77,7 +76,6 @@ async updateProvider(req: Request, res:Response){
     res.sendStatus(200);
   } catch (error) {
     res.status(400).json(error);
-    console.log(error);
   }
 },
 
@@ -93,7 +91,6 @@ async deleteProvider(req: Request, res:Response){
 
   } catch (error) {
     res.status(400).json(error);
-    console.log(error);
   }
 }
 

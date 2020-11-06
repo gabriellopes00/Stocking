@@ -25,8 +25,7 @@ async index(req: Request, res:Response){
 
     res.status(200).json(sales);
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    res.status(400).json(error);
   }
 },
 
@@ -37,11 +36,20 @@ async show(req: Request, res:Response){
     const sale:Array<sale> = await db.select()
     .from('sales').where({id: id});    
     if(sale.length === 0) return res.sendStatus(404);
-    else res.status(200).json(sale);
+    console.log(sale);
+
+    const clientName = await db.select('clientName').from('clients')
+    .where({id: sale[0].clientId});
+    const productName = await db.select('productName').from('products')
+    .where({id: sale[0].productId});
+
+    sale[0].clientId = clientName[0].clientName;
+    sale[0].productId = productName[0].productName;
+
+    res.status(200).json(sale);
 
   } catch (error) {
-    console.log(error);
-    error.name === 'ValidationError' ? res.sendStatus(400) : res.sendStatus(500);
+    res.status(400).json(error);
   }
 },
 
@@ -55,8 +63,7 @@ async createSale(req: Request, res:Response){
 
     res.sendStatus(201);
   } catch (error) {
-    res.sendStatus(400);
-    console.log(error);
+    res.status(400).json(error);
   }
 },
 /*
@@ -89,8 +96,7 @@ async deleteSale(req: Request, res:Response){
     res.sendStatus(200);
 
   } catch (error) {
-    res.status(500).json(error)
-    console.log(error);
+    res.status(400).json(error);
   }
 }
 

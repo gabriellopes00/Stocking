@@ -2,6 +2,14 @@
 ## Building ⚙
 You'll need [Node.js](https://nodejs.org) and i recommend that you have installed the [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) on your computer. With your setup completed, you will need to instal [MySQL](https://www.mysql.com/), and create an empty database called "stocking".
 
+This API can menage a stock system easily, here you can menage (clients, products, providers, sales and supplies). This API can store purchase and sales data of the stock, as well as it can relate the data of buyers and providers with these actions.
+
+``http://localhost:3000/clients/``
+``http://localhost:3000/products/``
+``http://localhost:3000/sales/``
+``http://localhost:3000/providers/``
+``http://localhost:3000/supplies/``
+
 This is API is running at port ``3000`` ```http://localhost:3000```;
 <br>
 
