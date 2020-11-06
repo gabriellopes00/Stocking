@@ -8,6 +8,8 @@ class Validation{
   suppliesValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { supplyDate: string; quantity: number; price: number; paymentMethod: string; description: string | undefined; providerId: number; productId: number; }>, object>;
   salesValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { saleDate: string; quantity: number; price: number; paymentMethod: string; description: string | undefined; clientId: number; productId: number; }>, object>;
   productValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { productName: string; quantity: number; price: number; categoryName: unknown; productDescription: string | undefined; }>, object>;
+  idParamValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { id: unknown; }>, object>;
+  categoryUrlValidation: Yup.ObjectSchema<Yup.Shape<object | undefined, { categoryUrl: string; }>, object>;
   
 
 
@@ -29,19 +31,18 @@ class Validation{
       clientName: Yup.string().required().trim(),
       email: Yup.string().email().required().trim(),
       phone: Yup.number().positive().required(),
-      cep: Yup.number().min(8).max(8).required()
+      cep: Yup.number().required()
     })
     this.providersValidation = Yup.object().shape({
       providerName: Yup.string().required().trim(),
       email: Yup.string().email().required().trim(),
       phone: Yup.number().positive().required(),
-      cep: Yup.number().min(8).max(8).required(),
-      cnpj: Yup.string().required().min(18).max(18),
+      cep: Yup.number().required(),
+      cnpj: Yup.string().required(),
       websiteLink: Yup.string().url().optional(),
     })
     this.categoriesValidation = Yup.object().shape({
-      categoryName: Yup.string().required().lowercase().trim(),
-      categoryUrl: Yup.string().required().lowercase().trim()
+      categoryName: Yup.string().required().lowercase().trim()
     })
     this.suppliesValidation = Yup.object().shape({
       supplyDate: Yup.string().required().trim(),
@@ -60,6 +61,12 @@ class Validation{
       description: Yup.string().max(500).optional(),
       clientId: Yup.number().positive().required(),
       productId: Yup.number().positive().required(),
+    })
+    this.idParamValidation = Yup.object().shape({
+      id: Yup.string().required()
+    })
+    this.categoryUrlValidation = Yup.object().shape({
+      categoryUrl: Yup.string().required()
     })
   }
 }
